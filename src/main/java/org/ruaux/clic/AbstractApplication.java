@@ -7,12 +7,9 @@ import java.util.Map;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
 public abstract class AbstractApplication implements ApplicationRunner {
 
-	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		Map<String, ICommand> commands = getCommandMap();
 		if (args.getNonOptionArgs().size() > 0) {
@@ -31,7 +28,7 @@ public abstract class AbstractApplication implements ApplicationRunner {
 	}
 
 	private Map<String, ICommand> getCommandMap() {
-		Map<String, ICommand> commandMap = new HashMap<>();
+		Map<String, ICommand> commandMap = new HashMap<String, ICommand>();
 		for (ICommand command : getCommands()) {
 			commandMap.put(getCommandName(command), command);
 		}
