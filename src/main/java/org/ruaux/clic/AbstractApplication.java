@@ -2,7 +2,6 @@ package org.ruaux.clic;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.boot.ApplicationArguments;
@@ -13,18 +12,19 @@ public abstract class AbstractApplication implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		Map<String, ICommand> commands = getCommandMap();
 		if (args.getNonOptionArgs().size() > 0) {
-			for (String commandName : args.getNonOptionArgs()) {
-				ICommand command = commands.get(commandName);
-				if (command == null) {
-					System.err.println("Invalid command: " + commandName);
-				} else {
-					command.execute();
-				}
+			String commandName = args.getNonOptionArgs().get(0);
+			ICommand command = commands.get(commandName);
+			if (command == null) {
+				System.err.println("Invalid command: " + commandName);
+			} else {
+				command.execute(args.getNonOptionArgs().subList(1, args.getNonOptionArgs().size())
+						.toArray(new String[args.getNonOptionArgs().size() - 1]));
 			}
 		} else {
 			System.out.println("No command passed. Valid commands are: "
 					+ Arrays.toString(commands.keySet().toArray(new String[0])));
 		}
+		System.exit(0);
 	}
 
 	private Map<String, ICommand> getCommandMap() {
@@ -42,6 +42,6 @@ public abstract class AbstractApplication implements ApplicationRunner {
 		return command.getClass().getSimpleName();
 	}
 
-	protected abstract List<ICommand> getCommands();
+	protected abstract ICommand[] getCommands();
 
 }
