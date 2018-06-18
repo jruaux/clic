@@ -1,7 +1,9 @@
 package org.ruaux.clic;
 
+import org.springframework.boot.ApplicationArguments;
+
 public interface ICommand {
 
-	void execute(String[] args);
+	void execute(ApplicationArguments args);
 
 }

@@ -17,8 +17,7 @@ public abstract class AbstractApplication implements ApplicationRunner {
 			if (command == null) {
 				System.err.println("Invalid command: " + commandName);
 			} else {
-				command.execute(args.getNonOptionArgs().subList(1, args.getNonOptionArgs().size())
-						.toArray(new String[args.getNonOptionArgs().size() - 1]));
+				command.execute(args);
 			}
 		} else {
 			System.out.println("No command passed. Valid commands are: "
